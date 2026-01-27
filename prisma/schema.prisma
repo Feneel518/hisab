@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  output   = "../src/lib/generated/prisma"
 }
 
 datasource db {
@@ -14,34 +14,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//enums
-enum UserRole {
-  USER
-  ADMIN
-  STAFF
-  OWNER
-  MANAGER
+// ===========================
+// Enums
+// ===========================
+
+enum PartyKind {
+  CUSTOMER
+  SUPPLIER
+  JOBWORKER
+  OTHER
 }
 
-model Post {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum EntryType {
+  INWARD
+  OUTWARD
+}
 
-  title   String
-  content String?
+enum EntryPurpose {
+  PURCHASE
+  SALE
+  JOBWORK
+  RETURN
+  TRANSFER
+  OTHER
+}
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+enum BillingStatus {
+  UNBILLED
+  BILLED
+}
 
-  @@map("posts")
+enum BankAccountType {
+  CURRENT
+  SAVINGS
+}
+
+enum BusinessOnboardingStatus {
+  BUSINESS_PENDING
+  PARTIES_PENDING
+  MATERIALS_PENDING
+  COMPLETED
 }
 
 model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  role      UserRole @default(USER)
 
   email         String  @unique
   emailVerified Boolean
@@ -50,7 +68,7 @@ model User {
 
   accounts Account[]
   sessions Session[]
-  posts    Post[]
+  business Business?
 
   @@map("users")
 }
@@ -102,4 +120,254 @@ model Verification {
   expiresAt  DateTime
 
   @@map("verifications")
+}
+
+model Business {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name         String
+  addressLine1 String?
+  addressLine2 String?
+  pincode      String?
+  email        String?
+  pan          String?
+  phone        String?
+  city         String?
+  gstin        String?
+
+  bankName          String?
+  bankAccountNumber String?
+  bankIFSC          String?
+  bankBranch        String?
+  bankAccountType   BankAccountType? @default(CURRENT)
+
+  // Manual subscription gating (MVP)
+  activeUntil DateTime?
+
+  ownerId String @unique
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+
+  onboardingStatus      BusinessOnboardingStatus @default(BUSINESS_PENDING)
+  onboardingCompletedAt DateTime?
+
+  parties          Party[]
+  materials        Material[]
+  entries          RegisterEntry[]
+  bills            Bill[]
+  businessCounters BusinessCounter[]
+
+  @@index([createdAt])
+  @@index([activeUntil])
+}
+
+model Party {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  name String
+  kind PartyKind @default(OTHER)
+
+  phone        String?
+  gstin        String?
+  addressLine1 String?
+  addressLine2 String?
+  pincode      String?
+  email        String?
+  pan          String?
+  city         String?
+
+  isActive Boolean @default(true)
+
+  // ✅ Soft delete
+  deletedAt DateTime?
+  deletedBy String? // store userId (owner) who deleted
+
+  entries RegisterEntry[]
+  bills   Bill[]
+
+  @@index([businessId, kind])
+  @@index([businessId, name])
+}
+
+model Material {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  name    String
+  unit    String // e.g. "KG", "PCS", "MTR", "LTR"
+  hsnCode String?
+  gstRate Int?
+
+  isActive Boolean @default(true)
+
+  challanItems challanItems[] // if you implement ChallanItem model
+
+  @@unique([businessId, name])
+  @@index([businessId, name])
+}
+
+//
+// Bill = Monthly consolidated invoice reference
+// One bill groups multiple OUTWARD+SALE challan entries.
+//
+model Bill {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  partyId String
+  party   Party  @relation(fields: [partyId], references: [id], onDelete: Restrict)
+
+  billNo   String
+  billDate DateTime
+
+  // Optional: store period used while generating the bill (useful for UI & exports)
+  periodStart DateTime?
+  periodEnd   DateTime?
+
+  // Optional snapshots (not required for MVP)
+  subtotal Float?
+  notes    String?
+
+  entries RegisterEntry[]
+
+  // Bill number should be unique per business
+  @@unique([businessId, billNo])
+  @@index([businessId, billDate])
+  @@index([businessId, partyId, billDate])
+}
+
+//
+// RegisterEntry = Universal movement record (inward/outward)
+// For MVP challan system, each challan is a single-line entry (one material per challan).
+//
+model RegisterEntry {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  date    DateTime
+  type    EntryType
+  purpose EntryPurpose
+
+  partyId String
+  party   Party  @relation(fields: [partyId], references: [id], onDelete: Restrict)
+
+  totalQuantity     Float
+  totalAmount       Float?
+  discountOnChallan Float?
+
+  // Challan fields (usually for OUTWARD+SALE and OUTWARD+JOBWORK)
+  challanNo String?
+  vehicleNo String?
+  remarks   String?
+
+  // Challan-based monthly billing
+  billingStatus BillingStatus @default(UNBILLED)
+
+  billId String?
+  bill   Bill?   @relation(fields: [billId], references: [id], onDelete: SetNull)
+
+  items                 challanItems[]
+  challanCommunications ChallanCommunication[]
+
+  // Practical uniqueness for challans within a business:
+  // If you want to allow duplicate challan numbers, remove this constraint.
+  @@unique([businessId, challanNo]) // challan no unique within business
+  // Guards / performance
+  @@index([businessId, date])
+  @@index([businessId, partyId, date])
+  @@index([businessId, type, purpose, date])
+  @@index([businessId, partyId, purpose, billingStatus])
+}
+
+model challanItems {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Single-line material for MVP (can be expanded later with RegisterEntryItem table) 
+  materialId String?
+  material   Material? @relation(fields: [materialId], references: [id], onDelete: SetNull)
+
+  challanId String
+  challan   RegisterEntry @relation(fields: [challanId], references: [id], onDelete: Cascade)
+
+  materialName String?
+  unit         String?
+
+  quantity Float
+  rate     Float?
+  amount   Float?
+  discount Float?
+
+  @@index([challanId])
+  @@index([materialId])
+}
+
+enum CounterType {
+  CHALLAN
+  BILL
+}
+
+model BusinessCounter {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id])
+
+  counterType CounterType
+  yearKey     String // e.g. "FY25-26" or "2025-2026"
+
+  nextNumber Int @default(1) // the next number to issue
+
+  @@unique([businessId, counterType, yearKey])
+  @@index([businessId, counterType, yearKey])
+}
+
+enum CommChannel {
+  EMAIL
+  WHATSAPP
+}
+
+enum CommStatus {
+  QUEUED
+  SENT
+  FAILED
+}
+
+model ChallanCommunication {
+  id        String        @id @default(uuid())
+  createdAt DateTime      @default(now())
+  challanId String
+  challan   RegisterEntry @relation(fields: [challanId], references: [id], onDelete: Cascade)
+
+  channel    CommChannel
+  status     CommStatus
+  to         String
+  subject    String?
+  message    String?
+  pdfUrl     String?
+  providerId String? // email messageId or whatsapp message id
+  error      String?
+
+  @@index([challanId, channel, createdAt])
 }

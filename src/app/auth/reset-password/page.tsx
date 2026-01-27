@@ -1,4 +1,4 @@
-import ResetPasswordForm from "@/components/reset-password-form";
+import ResetPasswordForm from "@/components/helpers/reset-password-form";
 import { redirect } from "next/navigation";
 import { FC } from "react";
 

@@ -8,9 +8,16 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Post'
 export type * from './models/User'
 export type * from './models/Account'
 export type * from './models/Session'
 export type * from './models/Verification'
+export type * from './models/Business'
+export type * from './models/Party'
+export type * from './models/Material'
+export type * from './models/Bill'
+export type * from './models/RegisterEntry'
+export type * from './models/challanItems'
+export type * from './models/BusinessCounter'
+export type * from './models/ChallanCommunication'
 export type * from './commonInputTypes'

@@ -29,8 +29,8 @@ export * from "./enums"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Posts
- * const posts = await prisma.post.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  * 
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -42,13 +42,8 @@ export { Prisma }
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node")
-path.join(process.cwd(), "lib/generated/prisma/query_engine-windows.dll.node")
+path.join(process.cwd(), "src/lib/generated/prisma/query_engine-windows.dll.node")
 
-/**
- * Model Post
- * 
- */
-export type Post = Prisma.PostModel
 /**
  * Model User
  * 
@@ -69,3 +64,43 @@ export type Session = Prisma.SessionModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model Business
+ * 
+ */
+export type Business = Prisma.BusinessModel
+/**
+ * Model Party
+ * 
+ */
+export type Party = Prisma.PartyModel
+/**
+ * Model Material
+ * 
+ */
+export type Material = Prisma.MaterialModel
+/**
+ * Model Bill
+ * 
+ */
+export type Bill = Prisma.BillModel
+/**
+ * Model RegisterEntry
+ * 
+ */
+export type RegisterEntry = Prisma.RegisterEntryModel
+/**
+ * Model challanItems
+ * 
+ */
+export type challanItems = Prisma.challanItemsModel
+/**
+ * Model BusinessCounter
+ * 
+ */
+export type BusinessCounter = Prisma.BusinessCounterModel
+/**
+ * Model ChallanCommunication
+ * 
+ */
+export type ChallanCommunication = Prisma.ChallanCommunicationModel

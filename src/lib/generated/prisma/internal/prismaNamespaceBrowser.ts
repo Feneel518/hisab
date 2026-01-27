@@ -49,11 +49,18 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 export const ModelName = {
-  Post: 'Post',
   User: 'User',
   Account: 'Account',
   Session: 'Session',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  Business: 'Business',
+  Party: 'Party',
+  Material: 'Material',
+  Bill: 'Bill',
+  RegisterEntry: 'RegisterEntry',
+  challanItems: 'challanItems',
+  BusinessCounter: 'BusinessCounter',
+  ChallanCommunication: 'ChallanCommunication'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -72,23 +79,10 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const PostScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  title: 'title',
-  content: 'content',
-  userId: 'userId'
-} as const
-
-export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
-
-
 export const UserScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  role: 'role',
   email: 'email',
   emailVerified: 'emailVerified',
   name: 'name',
@@ -141,6 +135,157 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const BusinessScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  addressLine1: 'addressLine1',
+  addressLine2: 'addressLine2',
+  pincode: 'pincode',
+  email: 'email',
+  pan: 'pan',
+  phone: 'phone',
+  city: 'city',
+  gstin: 'gstin',
+  bankName: 'bankName',
+  bankAccountNumber: 'bankAccountNumber',
+  bankIFSC: 'bankIFSC',
+  bankBranch: 'bankBranch',
+  bankAccountType: 'bankAccountType',
+  activeUntil: 'activeUntil',
+  ownerId: 'ownerId',
+  onboardingStatus: 'onboardingStatus',
+  onboardingCompletedAt: 'onboardingCompletedAt'
+} as const
+
+export type BusinessScalarFieldEnum = (typeof BusinessScalarFieldEnum)[keyof typeof BusinessScalarFieldEnum]
+
+
+export const PartyScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  businessId: 'businessId',
+  name: 'name',
+  kind: 'kind',
+  phone: 'phone',
+  gstin: 'gstin',
+  addressLine1: 'addressLine1',
+  addressLine2: 'addressLine2',
+  pincode: 'pincode',
+  email: 'email',
+  pan: 'pan',
+  city: 'city',
+  isActive: 'isActive',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PartyScalarFieldEnum = (typeof PartyScalarFieldEnum)[keyof typeof PartyScalarFieldEnum]
+
+
+export const MaterialScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  businessId: 'businessId',
+  name: 'name',
+  unit: 'unit',
+  hsnCode: 'hsnCode',
+  gstRate: 'gstRate',
+  isActive: 'isActive'
+} as const
+
+export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
+
+
+export const BillScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  businessId: 'businessId',
+  partyId: 'partyId',
+  billNo: 'billNo',
+  billDate: 'billDate',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  subtotal: 'subtotal',
+  notes: 'notes'
+} as const
+
+export type BillScalarFieldEnum = (typeof BillScalarFieldEnum)[keyof typeof BillScalarFieldEnum]
+
+
+export const RegisterEntryScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  businessId: 'businessId',
+  date: 'date',
+  type: 'type',
+  purpose: 'purpose',
+  partyId: 'partyId',
+  totalQuantity: 'totalQuantity',
+  totalAmount: 'totalAmount',
+  discountOnChallan: 'discountOnChallan',
+  challanNo: 'challanNo',
+  vehicleNo: 'vehicleNo',
+  remarks: 'remarks',
+  billingStatus: 'billingStatus',
+  billId: 'billId'
+} as const
+
+export type RegisterEntryScalarFieldEnum = (typeof RegisterEntryScalarFieldEnum)[keyof typeof RegisterEntryScalarFieldEnum]
+
+
+export const ChallanItemsScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  materialId: 'materialId',
+  challanId: 'challanId',
+  materialName: 'materialName',
+  unit: 'unit',
+  quantity: 'quantity',
+  rate: 'rate',
+  amount: 'amount',
+  discount: 'discount'
+} as const
+
+export type ChallanItemsScalarFieldEnum = (typeof ChallanItemsScalarFieldEnum)[keyof typeof ChallanItemsScalarFieldEnum]
+
+
+export const BusinessCounterScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  businessId: 'businessId',
+  counterType: 'counterType',
+  yearKey: 'yearKey',
+  nextNumber: 'nextNumber'
+} as const
+
+export type BusinessCounterScalarFieldEnum = (typeof BusinessCounterScalarFieldEnum)[keyof typeof BusinessCounterScalarFieldEnum]
+
+
+export const ChallanCommunicationScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  challanId: 'challanId',
+  channel: 'channel',
+  status: 'status',
+  to: 'to',
+  subject: 'subject',
+  message: 'message',
+  pdfUrl: 'pdfUrl',
+  providerId: 'providerId',
+  error: 'error'
+} as const
+
+export type ChallanCommunicationScalarFieldEnum = (typeof ChallanCommunicationScalarFieldEnum)[keyof typeof ChallanCommunicationScalarFieldEnum]
 
 
 export const SortOrder = {

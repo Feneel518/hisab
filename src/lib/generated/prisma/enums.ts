@@ -9,12 +9,82 @@
 * 🟢 You can import this file directly.
 */
 
-export const UserRole = {
-  USER: 'USER',
-  ADMIN: 'ADMIN',
-  STAFF: 'STAFF',
-  OWNER: 'OWNER',
-  MANAGER: 'MANAGER'
+export const PartyKind = {
+  CUSTOMER: 'CUSTOMER',
+  SUPPLIER: 'SUPPLIER',
+  JOBWORKER: 'JOBWORKER',
+  OTHER: 'OTHER'
 } as const
 
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+export type PartyKind = (typeof PartyKind)[keyof typeof PartyKind]
+
+
+export const EntryType = {
+  INWARD: 'INWARD',
+  OUTWARD: 'OUTWARD'
+} as const
+
+export type EntryType = (typeof EntryType)[keyof typeof EntryType]
+
+
+export const EntryPurpose = {
+  PURCHASE: 'PURCHASE',
+  SALE: 'SALE',
+  JOBWORK: 'JOBWORK',
+  RETURN: 'RETURN',
+  TRANSFER: 'TRANSFER',
+  OTHER: 'OTHER'
+} as const
+
+export type EntryPurpose = (typeof EntryPurpose)[keyof typeof EntryPurpose]
+
+
+export const BillingStatus = {
+  UNBILLED: 'UNBILLED',
+  BILLED: 'BILLED'
+} as const
+
+export type BillingStatus = (typeof BillingStatus)[keyof typeof BillingStatus]
+
+
+export const BankAccountType = {
+  CURRENT: 'CURRENT',
+  SAVINGS: 'SAVINGS'
+} as const
+
+export type BankAccountType = (typeof BankAccountType)[keyof typeof BankAccountType]
+
+
+export const BusinessOnboardingStatus = {
+  BUSINESS_PENDING: 'BUSINESS_PENDING',
+  PARTIES_PENDING: 'PARTIES_PENDING',
+  MATERIALS_PENDING: 'MATERIALS_PENDING',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type BusinessOnboardingStatus = (typeof BusinessOnboardingStatus)[keyof typeof BusinessOnboardingStatus]
+
+
+export const CounterType = {
+  CHALLAN: 'CHALLAN',
+  BILL: 'BILL'
+} as const
+
+export type CounterType = (typeof CounterType)[keyof typeof CounterType]
+
+
+export const CommChannel = {
+  EMAIL: 'EMAIL',
+  WHATSAPP: 'WHATSAPP'
+} as const
+
+export type CommChannel = (typeof CommChannel)[keyof typeof CommChannel]
+
+
+export const CommStatus = {
+  QUEUED: 'QUEUED',
+  SENT: 'SENT',
+  FAILED: 'FAILED'
+} as const
+
+export type CommStatus = (typeof CommStatus)[keyof typeof CommStatus]

@@ -1,4 +1,4 @@
-import ForgotPassword from "@/components/forgot-password-form";
+import ForgotPassword from "@/components/helpers/forgot-password-form";
 import { FC } from "react";
 
 interface pageProps {
