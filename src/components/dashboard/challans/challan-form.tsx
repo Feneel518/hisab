@@ -23,7 +23,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { createChallanAction } from "@/lib/actions/challans/createChallanAction";
 import { updateChallanAction } from "@/lib/actions/challans/updateChallanAction";
-import { Prisma } from "@/lib/generated/prisma/client";
+import { Prisma } from "@prisma/client/client";
 import { getFinancialYearKey, pad } from "@/lib/helpers/getFinancialYear";
 import {
   createChallanSchema,
@@ -139,7 +139,7 @@ const ChallanForm: FC<ChallanFormProps> = ({
   const computed = useMemo(() => {
     const totalQty = (itemsWatch ?? []).reduce(
       (s, it) => s + Number(it.quantity ?? 0),
-      0
+      0,
     );
     const subTotal = (itemsWatch ?? []).reduce((s, it) => {
       const qty = Number(it.quantity ?? 0);
@@ -242,7 +242,7 @@ const ChallanForm: FC<ChallanFormProps> = ({
                             challan
                               ? Number(challan.challanNo)
                               : challanNumber!,
-                            4
+                            4,
                           )}`}
                           readOnly
                         />
@@ -412,21 +412,21 @@ const ChallanForm: FC<ChallanFormProps> = ({
                                     onSelect={(material) => {
                                       form.setValue(
                                         `items.${idx}.materialId`,
-                                        material.id
+                                        material.id,
                                       );
                                       form.setValue(
                                         `items.${idx}.materialName`,
-                                        ""
+                                        "",
                                       );
                                       form.setValue(
                                         `items.${idx}.unit`,
-                                        material.unit
+                                        material.unit,
                                       );
 
                                       if (material.defaultRate) {
                                         form.setValue(
                                           `items.${idx}.rate`,
-                                          material.defaultRate
+                                          material.defaultRate,
                                         );
                                       }
                                     }}
@@ -531,7 +531,7 @@ const ChallanForm: FC<ChallanFormProps> = ({
                               const disc = Number(it?.discount ?? 0);
                               return Math.max(
                                 0,
-                                (rate * qty * (100 - disc)) / 100
+                                (rate * qty * (100 - disc)) / 100,
                               ).toFixed(2);
                             })()}
                           </div>

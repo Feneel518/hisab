@@ -7,7 +7,7 @@ import {
 import { requireBusiness } from "../business/getBusiness";
 import { prisma } from "@/lib/prisma/db";
 import { revalidatePath } from "next/cache";
-import { Prisma } from "@/lib/generated/prisma/client";
+import { Prisma } from "@prisma/client/client";
 
 const normalizeName = (name: string) => name.trim();
 
@@ -17,7 +17,7 @@ const parseGstRate = (value: unknown) => {
   return null;
 };
 export const updateMaterialAction = async (
-  values: materialCreateSchemaRequest
+  values: materialCreateSchemaRequest,
 ) => {
   const business = await requireBusiness();
 

@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatCurrency, formatINRCompact } from "@/lib/format/currency";
-import { RegisterEntry } from "@/lib/generated/prisma/client";
+import { RegisterEntry } from "@prisma/client/client";
 import { getFinancialYearKey, pad } from "@/lib/helpers/getFinancialYear";
 import { useRouter } from "next/navigation";
 import { parseAsInteger, useQueryState } from "nuqs";
@@ -52,7 +52,7 @@ const ChallanTable: FC<ChallanTableProps> = ({
   const [pendingId, setPendingId] = React.useState<string | null>(null);
   const [pageQ, setPageQ] = useQueryState(
     "page",
-    parseAsInteger.withDefault(1)
+    parseAsInteger.withDefault(1),
   );
 
   return (

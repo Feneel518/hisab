@@ -1,7 +1,6 @@
 "use server";
 
 import { Prisma } from "@/lib/generated/prisma/client";
-import { PrismaClient } from "@/lib/generated/prisma/internal/class";
 import { getFinancialYearKey, pad } from "@/lib/helpers/getFinancialYear";
 
 export const allocateChallanNumber = async (opts: {

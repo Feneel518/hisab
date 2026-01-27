@@ -7,7 +7,7 @@ import {
 import { requireBusiness } from "../business/getBusiness";
 import { prisma } from "@/lib/prisma/db";
 import { revalidatePath } from "next/cache";
-import { Prisma } from "@/lib/generated/prisma/client";
+import { Prisma } from "@prisma/client/client";
 
 function computeTotals(input: createChallanSchemaRequest) {
   const headerDisc = Number(input.discountOnChallan ?? 0);
@@ -40,7 +40,7 @@ function computeTotals(input: createChallanSchemaRequest) {
 }
 
 export const updateChallanAction = async (
-  values: createChallanSchemaRequest
+  values: createChallanSchemaRequest,
 ) => {
   const business = await requireBusiness();
 
@@ -106,7 +106,7 @@ export const updateChallanAction = async (
             challanId: data.id!,
 
             materialId: it.materialId ?? null,
-            materialName: it.materialId ? null : it.materialName ?? null,
+            materialName: it.materialId ? null : (it.materialName ?? null),
             unit: it.unit,
 
             quantity: it.quantity,

@@ -250,7 +250,7 @@ const getMonthlySales = async (opts: {
     ORDER BY 1 ASC
   `;
 
-  return rows.map((r) => ({
+  return rows.map((r: any) => ({
     month: r.month.toISOString(),
     amount: Number(r.amount ?? 0),
   }));

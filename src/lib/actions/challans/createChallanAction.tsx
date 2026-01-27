@@ -8,10 +8,10 @@ import { requireBusiness } from "../business/getBusiness";
 import { prisma } from "@/lib/prisma/db";
 import { allocateChallanNumber } from "../helperActions/allocateChallanNumber";
 import { revalidatePath } from "next/cache";
-import { Prisma } from "@/lib/generated/prisma/client";
+import { Prisma } from "@prisma/client/client";
 
 export const createChallanAction = async (
-  values: createChallanSchemaRequest
+  values: createChallanSchemaRequest,
 ) => {
   const business = await requireBusiness();
 
@@ -79,8 +79,8 @@ export const createChallanAction = async (
             create: itemsComputed.map((it) => {
               return {
                 materialId: it.materialId ?? null,
-                materialName: it.materialId ? null : it.materialName ?? null,
-                unit: it.unit ? null : it.unit ?? null,
+                materialName: it.materialId ? null : (it.materialName ?? null),
+                unit: it.unit ? null : (it.unit ?? null),
 
                 quantity: it.quantity,
                 rate: it.rate ?? 0,

@@ -37,11 +37,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { TwoCol } from "@/lib/helpers/TwoCols";
-// import { PartyKind } from "@/lib/generated/prisma/enums";
+// import { PartyKind } from "@prisma/client/enums";
 import { Section } from "@/lib/helpers/Section";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
-import { PartyKind } from "@/lib/generated/prisma/enums";
+import { PartyKind } from "@prisma/client/enums";
 import { useMediaQuery } from "@/hooks/use-mobile";
 import {
   Drawer,

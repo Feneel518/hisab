@@ -1,7 +1,7 @@
 "use client";
 
 import A4Page from "@/components/helpers/A4Page";
-import { Prisma } from "@/lib/generated/prisma/client";
+import { Prisma } from "@prisma/client/client";
 import { FC, useState } from "react";
 import ChallanHeader from "./challan-header";
 import ChallanViewTable from "./challan-view-table";

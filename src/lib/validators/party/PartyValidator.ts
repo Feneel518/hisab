@@ -1,4 +1,4 @@
-import { PartyKind } from "@/lib/generated/prisma/enums";
+import { PartyKind } from "@prisma/client/enums";
 import z from "zod";
 
 export const partyCreateSchema = z.object({
@@ -20,7 +20,7 @@ export const partyCreateSchema = z.object({
       (v) =>
         !v ||
         /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(v),
-      "Invalid GSTIN format"
+      "Invalid GSTIN format",
     ),
   pan: z
     .string()
@@ -28,7 +28,7 @@ export const partyCreateSchema = z.object({
     .optional()
     .refine(
       (v) => !v || /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(v),
-      "Invalid PAN format (e.g., ABCDE1234F)"
+      "Invalid PAN format (e.g., ABCDE1234F)",
     ),
 
   addressLine1: z.string().optional(),

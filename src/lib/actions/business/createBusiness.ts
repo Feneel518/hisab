@@ -1,8 +1,8 @@
 "use server";
 
 import { requireAuth } from "@/lib/auth/require-auth";
-import { Prisma } from "@/lib/generated/prisma/client";
-import { BusinessOnboardingStatus } from "@/lib/generated/prisma/enums";
+import { Prisma } from "@prisma/client/client";
+import { BusinessOnboardingStatus } from "@prisma/client/enums";
 import { prisma } from "@/lib/prisma/db";
 import {
   businessCreateSchema,
@@ -20,7 +20,7 @@ export type ActionResult<T = void> =
     };
 
 export const createBusinessAction = async (
-  values: BusinessCreateSchemaRequest
+  values: BusinessCreateSchemaRequest,
 ): Promise<ActionResult> => {
   const user = await requireAuth();
 
