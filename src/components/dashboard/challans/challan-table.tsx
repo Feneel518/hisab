@@ -16,8 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatCurrency, formatINRCompact } from "@/lib/format/currency";
-import { RegisterEntry } from "@prisma/client/client";
+import { formatCurrency } from "@/lib/format/currency";
 import { getFinancialYearKey, pad } from "@/lib/helpers/getFinancialYear";
 import { useRouter } from "next/navigation";
 import { parseAsInteger, useQueryState } from "nuqs";
