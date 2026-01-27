@@ -1,4 +1,4 @@
-import { PartyKind } from "@prisma/client/enums";
+import { PartyKind } from "@prisma/client";
 import z from "zod";
 
 export const partyCreateSchema = z.object({
