@@ -7,7 +7,7 @@ import {
 import { requireBusiness } from "../business/getBusiness";
 import { prisma } from "@/lib/prisma/db";
 import { revalidatePath } from "next/cache";
-import { Prisma } from "@prisma/client/client";
+import { Prisma } from "@prisma/client";
 
 function computeTotals(input: createChallanSchemaRequest) {
   const headerDisc = Number(input.discountOnChallan ?? 0);

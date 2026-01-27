@@ -8,7 +8,7 @@ import { requireBusiness } from "../business/getBusiness";
 import { prisma } from "@/lib/prisma/db";
 import { allocateChallanNumber } from "../helperActions/allocateChallanNumber";
 import { revalidatePath } from "next/cache";
-import { Prisma } from "@prisma/client/client";
+import { Prisma } from "@prisma/client";
 
 export const createChallanAction = async (
   values: createChallanSchemaRequest,
@@ -53,6 +53,7 @@ export const createChallanAction = async (
   try {
     const challan = await prisma.$transaction(async (tx) => {
       const { challanNumber, issued } = await allocateChallanNumber({
+        // @ts-ignore
         prisma: tx,
         businessId: (await business).id,
         date: data.date,

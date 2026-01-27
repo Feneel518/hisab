@@ -1,8 +1,8 @@
 "use server";
 
 import { requireAuth } from "@/lib/auth/require-auth";
-import { Prisma } from "@prisma/client/client";
-import { BusinessOnboardingStatus, PartyKind } from "@prisma/client/enums";
+import { Prisma } from "@prisma/client";
+import { BusinessOnboardingStatus, PartyKind } from "@prisma/client";
 import { prisma } from "@/lib/prisma/db";
 import {
   partyCreateSchema,

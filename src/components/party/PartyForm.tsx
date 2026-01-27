@@ -24,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { PartyKind } from "@prisma/client/enums";
+import { PartyKind } from "@prisma/client";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
