@@ -50,26 +50,26 @@ export const getPartyDetailsAction = async ({
   const where = buildEntriesWhere({ businessId, partyId, f: filters });
 
   // KPIS
-  const [saleAgg, purchaseAgg, unbilledCount, lastActivity] = await Promise.all(
-    [
-      prisma.registerEntry.aggregate({
-        where: { ...where, purpose: EntryPurpose.SALE },
-        _sum: { amount: true },
-      }),
-      prisma.registerEntry.aggregate({
-        where: { ...where, purpose: EntryPurpose.PURCHASE },
-        _sum: { amount: true },
-      }),
-      prisma.registerEntry.count({
-        where: { ...where, billingStatus: BillingStatus.UNBILLED },
-      }),
-      prisma.registerEntry.findFirst({
-        where,
-        orderBy: { date: "desc" },
-        select: { date: true },
-      }),
-    ]
-  );
+  // const [saleAgg, purchaseAgg, unbilledCount, lastActivity] = await Promise.all(
+  //   [
+  //     prisma.registerEntry.aggregate({
+  //       where: { ...where, purpose: EntryPurpose.SALE },
+  //       _sum: { amount: true },
+  //     }),
+  //     prisma.registerEntry.aggregate({
+  //       where: { ...where, purpose: EntryPurpose.PURCHASE },
+  //       _sum: { amount: true },
+  //     }),
+  //     prisma.registerEntry.count({
+  //       where: { ...where, billingStatus: BillingStatus.UNBILLED },
+  //     }),
+  //     prisma.registerEntry.findFirst({
+  //       where,
+  //       orderBy: { date: "desc" },
+  //       select: { date: true },
+  //     }),
+  //   ],
+  // );
 
   // Entries List
   const skip = (filters.page - 1) * filters.pageSize;
@@ -86,18 +86,18 @@ export const getPartyDetailsAction = async ({
         date: true,
         type: true,
         purpose: true,
-        quantity: true,
-        unit: true,
-        rate: true,
-        amount: true,
-        discount: true,
+        // quantity: true,
+        // unit: true,
+        // rate: true,
+        // amount: true,
+        // discount: true,
         challanNo: true,
         vehicleNo: true,
         remarks: true,
         billingStatus: true,
         bill: { select: { id: true, billNo: true } },
-        material: { select: { id: true, name: true, unit: true } },
-        materialName: true,
+        // material: { select: { id: true, name: true, unit: true } },
+        // materialName: true,
       },
     }),
     prisma.registerEntry.count({ where }),
@@ -112,23 +112,23 @@ export const getPartyDetailsAction = async ({
   });
 
   // Unbilled aging buckets (based on all-time unbilled or filtered range—choose filtered range for MVP)
-  const unbilledAging = await getUnbilledAgingBuckets({
-    businessId,
-    partyId,
-    from: filters.from,
-    to: filters.to,
-  });
+  // const unbilledAging = await getUnbilledAgingBuckets({
+  //   businessId,
+  //   partyId,
+  //   from: filters.from,
+  //   to: filters.to,
+  // });
 
   return {
     party,
-    kpis: {
-      totalSales: Number(saleAgg._sum.amount ?? 0),
-      totalPurchase: Number(purchaseAgg._sum.amount ?? 0),
-      unbilledCount,
-      lastActivity: lastActivity?.date ?? null,
-    },
+    // kpis: {
+    //   totalSales: Number(saleAgg._sum.amount ?? 0),
+    //   totalPurchase: Number(purchaseAgg._sum.amount ?? 0),
+    //   unbilledCount,
+    //   lastActivity: lastActivity?.date ?? null,
+    // },
     monthlySales,
-    unbilledAging,
+    // unbilledAging,
     entries,
     pagination: {
       page: filters.page,
@@ -151,7 +151,7 @@ export type PartyDetailsFilter = {
 };
 
 export const parsePartyDetailsFilter = async (
-  searchParams: Record<string, string | string[] | undefined>
+  searchParams: Record<string, string | string[] | undefined>,
 ): Promise<PartyDetailsFilter> => {
   const now = new Date();
   const defaultFrom = new Date(now);
@@ -182,16 +182,16 @@ export const parsePartyDetailsFilter = async (
 
   const page = Math.max(
     1,
-    Number(typeof searchParams.page === "string" ? searchParams.page : 1) || 1
+    Number(typeof searchParams.page === "string" ? searchParams.page : 1) || 1,
   );
   const pageSize = Math.min(
     100,
     Math.max(
       10,
       Number(
-        typeof searchParams.pageSize === "string" ? searchParams.pageSize : 20
-      ) || 20
-    )
+        typeof searchParams.pageSize === "string" ? searchParams.pageSize : 20,
+      ) || 20,
+    ),
   );
 
   return { from, to, type, purpose, billing, q, page, pageSize };
@@ -256,54 +256,54 @@ const getMonthlySales = async (opts: {
   }));
 };
 
-async function getUnbilledAgingBuckets(opts: {
-  businessId: string;
-  partyId: string;
-  from: Date;
-  to: Date;
-}) {
-  const unbilled = await prisma.registerEntry.findMany({
-    where: {
-      businessId: opts.businessId,
-      partyId: opts.partyId,
-      billingStatus: BillingStatus.UNBILLED,
-      date: { gte: opts.from, lte: opts.to },
-    },
-    select: { date: true, amount: true },
-  });
+// async function getUnbilledAgingBuckets(opts: {
+//   businessId: string;
+//   partyId: string;
+//   from: Date;
+//   to: Date;
+// }) {
+//   const unbilled = await prisma.registerEntry.findMany({
+//     where: {
+//       businessId: opts.businessId,
+//       partyId: opts.partyId,
+//       billingStatus: BillingStatus.UNBILLED,
+//       date: { gte: opts.from, lte: opts.to },
+//     },
+//     select: { date: true, amount: true },
+//   });
 
-  const now = new Date();
-  const buckets = [
-    { key: "0_7", label: "0–7 days", count: 0, amount: 0 },
-    { key: "8_15", label: "8–15 days", count: 0, amount: 0 },
-    { key: "16_30", label: "16–30 days", count: 0, amount: 0 },
-    { key: "31_60", label: "31–60 days", count: 0, amount: 0 },
-    { key: "60_plus", label: "60+ days", count: 0, amount: 0 },
-  ];
+//   const now = new Date();
+//   const buckets = [
+//     { key: "0_7", label: "0–7 days", count: 0, amount: 0 },
+//     { key: "8_15", label: "8–15 days", count: 0, amount: 0 },
+//     { key: "16_30", label: "16–30 days", count: 0, amount: 0 },
+//     { key: "31_60", label: "31–60 days", count: 0, amount: 0 },
+//     { key: "60_plus", label: "60+ days", count: 0, amount: 0 },
+//   ];
 
-  for (const e of unbilled) {
-    const days = Math.floor(
-      (now.getTime() - new Date(e.date).getTime()) / (1000 * 60 * 60 * 24)
-    );
-    const amt = Number(e.amount ?? 0);
+//   for (const e of unbilled) {
+//     const days = Math.floor(
+//       (now.getTime() - new Date(e.date).getTime()) / (1000 * 60 * 60 * 24),
+//     );
+//     const amt = Number(e.amount ?? 0);
 
-    if (days <= 7) {
-      buckets[0].count++;
-      buckets[0].amount += amt;
-    } else if (days <= 15) {
-      buckets[1].count++;
-      buckets[1].amount += amt;
-    } else if (days <= 30) {
-      buckets[2].count++;
-      buckets[2].amount += amt;
-    } else if (days <= 60) {
-      buckets[3].count++;
-      buckets[3].amount += amt;
-    } else {
-      buckets[4].count++;
-      buckets[4].amount += amt;
-    }
-  }
+//     if (days <= 7) {
+//       buckets[0].count++;
+//       buckets[0].amount += amt;
+//     } else if (days <= 15) {
+//       buckets[1].count++;
+//       buckets[1].amount += amt;
+//     } else if (days <= 30) {
+//       buckets[2].count++;
+//       buckets[2].amount += amt;
+//     } else if (days <= 60) {
+//       buckets[3].count++;
+//       buckets[3].amount += amt;
+//     } else {
+//       buckets[4].count++;
+//       buckets[4].amount += amt;
+//     }
+//   }
 
-  return buckets.map((b) => ({ ...b, amount: Number(b.amount) }));
-}
+//   return buckets.map((b) => ({ ...b, amount: Number(b.amount) }));
+// }
