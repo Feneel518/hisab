@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PartyKind } from "@prisma/client/enums";
+import { PartyKind } from "@prisma/client";
 import { FC } from "react";
 
 interface PartyHeaderProps {
