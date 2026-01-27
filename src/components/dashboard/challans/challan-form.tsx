@@ -23,7 +23,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { createChallanAction } from "@/lib/actions/challans/createChallanAction";
 import { updateChallanAction } from "@/lib/actions/challans/updateChallanAction";
-import { Prisma } from "@prisma/client/client";
+import { Prisma } from "@prisma/client";
 import { getFinancialYearKey, pad } from "@/lib/helpers/getFinancialYear";
 import {
   createChallanSchema,
