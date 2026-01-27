@@ -25,14 +25,14 @@ export async function SiteHeader({
           Hello, <strong>{businessName}</strong>
         </h1>
         <div className="ml-auto flex items-center gap-2">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
             📆 <span className="font-medium">This Month:</span>
             <span>{stats.entryCount} entries</span>
             <span>·</span>
             <span className="font-semibold">
               {formatINRCompact(stats.turnover)} turnover
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
     </header>
