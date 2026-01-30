@@ -13,15 +13,15 @@ interface pageProps {
 const page: FC<pageProps> = async ({ params, searchParams }) => {
   const business = await requireBusiness();
   const { partyId } = await params;
-  const filters = await parsePartyDetailsFilter(await searchParams);
+  // const filters = await parsePartyDetailsFilter(await searchParams);
 
-  const partyDetails = await getPartyDetailsAction({
-    businessId: business.id,
-    partyId,
-    filters,
-  });
+  // const partyDetails = await getPartyDetailsAction({
+  //   businessId: business.id,
+  //   partyId,
+  //   filters: undefined,
+  // });
 
-  return <div className=""></div>;
+  return <div className="">Party Details for ID: {partyId}</div>;
 };
 
 export default page;

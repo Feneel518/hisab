@@ -1,3 +1,4 @@
+import { IconFileDescription } from "@tabler/icons-react";
 import { GalleryVerticalEnd } from "lucide-react";
 import { FC } from "react";
 
@@ -11,10 +12,10 @@ const layout: FC<layoutProps> = ({ children }) => {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="#" className="flex items-center gap-2 font-medium">
-            <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-              <GalleryVerticalEnd className="size-4" />
+            <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md">
+              <IconFileDescription className="size-6" />
             </div>
-            Acme Inc.
+            Hisab.
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
@@ -22,6 +23,9 @@ const layout: FC<layoutProps> = ({ children }) => {
         </div>
       </div>
       <div className="bg-muted relative hidden lg:block">
+        <div className="z-10 absolute  text-white bottom-4 right-4 text-4xl font-mono">
+          "Hisab wahi, tension nahi"
+        </div>
         <img
           src="/placeholder.jpg"
           alt="Image"

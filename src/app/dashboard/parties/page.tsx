@@ -5,6 +5,7 @@ import { requireBusiness } from "@/lib/actions/business/getBusiness";
 import { prisma } from "@/lib/prisma/db";
 import { partiesSearchParamsCache } from "@/lib/searchParams/parties.search-params";
 import { FC } from "react";
+import { is } from "zod/v4/locales";
 
 interface pageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -30,10 +31,10 @@ const page: FC<pageProps> = async ({ searchParams }) => {
     ...(active === "all"
       ? {}
       : active === "deleted"
-      ? { deletedAt: { not: null } }
-      : active === "true"
-      ? { isActive: active === "true", deletedAt: null }
-      : {}),
+        ? { deletedAt: { not: null } }
+        : active === "true"
+          ? { isActive: active === "true", deletedAt: null }
+          : { isActive: active === "false", deletedAt: null }),
     ...(q.length > 0
       ? {
           OR: [
@@ -61,6 +62,7 @@ const page: FC<pageProps> = async ({ searchParams }) => {
         isActive: true,
         createdAt: true,
         deletedAt: true,
+        addressLine1: true,
       },
     }),
     prisma.party.count({ where }),

@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Google_Sans_Code, Volkhov } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const geistSans = Volkhov({
+  variable: "--font-volkov",
   subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sansCode = Google_Sans_Code({
+  variable: "--font-sans-code",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "300", "800"],
 });
 
 export const metadata: Metadata = {
@@ -27,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        className={`${geistSans.variable} ${sansCode.variable} antialiased font-sans`}>
         <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster richColors />
       </body>

@@ -138,9 +138,9 @@ const PartyForm: FC<PartyFormProps> = (props: {
                         <SelectItem value={PartyKind.CUSTOMER}>
                           Customer
                         </SelectItem>
-                        <SelectItem value={PartyKind.SUPPLIER}>
+                        {/* <SelectItem value={PartyKind.SUPPLIER}>
                           Supplier
-                        </SelectItem>
+                        </SelectItem> */}
                         <SelectItem value={PartyKind.JOBWORKER}>
                           Job-worker
                         </SelectItem>

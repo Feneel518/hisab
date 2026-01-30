@@ -22,7 +22,7 @@ export const requireOnboarded = async () => {
 
   //   Step-2: Atleast 1 party required
   if (partyCount === 0) {
-    redirect("/onbaording/party");
+    redirect("/onboarding/party");
   }
 
   //   onboarding done

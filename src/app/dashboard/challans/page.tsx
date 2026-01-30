@@ -71,8 +71,6 @@ const page: FC<pageProps> = async ({ searchParams }) => {
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  console.log(items);
-
   return (
     <div className="">
       <div className="flex items-start justify-between gap-4">

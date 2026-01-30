@@ -111,11 +111,13 @@ const ChallanTable: FC<ChallanTableProps> = ({
               <TableCell className="">
                 <Badge
                   className={
-                    p.billingStatus === "UNBILLED"
-                      ? "bg-red-600"
-                      : "bg-green-600"
+                    p.purpose === "SALE"
+                      ? p.billingStatus === "UNBILLED"
+                        ? "bg-red-600"
+                        : "bg-green-600"
+                      : "bg-transparent text-black"
                   }>
-                  {p.billingStatus}
+                  {p.purpose !== "SALE" ? "-" : p.billingStatus}
                 </Badge>
               </TableCell>
 

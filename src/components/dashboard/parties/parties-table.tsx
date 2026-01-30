@@ -29,6 +29,7 @@ type PartyRow = {
   id: string;
   name: string;
   kind: "CUSTOMER" | "SUPPLIER" | "JOBWORKER" | "OTHER";
+  addressLine1: string | null;
   phone: string | null;
   gstin: string | null;
   city: string | null;
@@ -52,7 +53,7 @@ export default function PartiesTable({
   const [pendingId, setPendingId] = React.useState<string | null>(null);
   const [pageQ, setPageQ] = useQueryState(
     "page",
-    parseAsInteger.withDefault(1)
+    parseAsInteger.withDefault(1),
   );
 
   async function onToggle(id: string) {
@@ -115,8 +116,8 @@ export default function PartiesTable({
                     p.deletedAt
                       ? "destructive"
                       : p.isActive
-                      ? "default"
-                      : "secondary"
+                        ? "default"
+                        : "secondary"
                   }>
                   {p.deletedAt ? "Deleted" : p.isActive ? "Active" : "Inactive"}
                 </Badge>
@@ -146,6 +147,7 @@ export default function PartiesTable({
                         phone: p.phone ?? "",
                         gstin: p.gstin ?? "",
                         city: p.city ?? "",
+                        addressLine1: p.addressLine1 ?? "",
                       }}
                     />
                     {p.deletedAt ? (

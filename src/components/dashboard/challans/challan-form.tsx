@@ -266,14 +266,7 @@ const ChallanForm: FC<ChallanFormProps> = ({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {[
-                            "PURCHASE",
-                            "SALE",
-                            "JOBWORK",
-                            "RETURN",
-                            "TRANSFER",
-                            "OTHER",
-                          ].map((u) => (
+                          {["SALE", "OTHER"].map((u) => (
                             <SelectItem key={u} value={u}>
                               {u}
                             </SelectItem>

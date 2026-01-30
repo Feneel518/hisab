@@ -20,7 +20,6 @@ import PartyDialog from "./parties-dialog";
 const kindParser = parseAsStringEnum([
   "ALL",
   "CUSTOMER",
-  "SUPPLIER",
   "JOBWORKER",
   "OTHER",
 ] as const).withDefault("ALL");
@@ -42,7 +41,7 @@ export default function PartiesToolbar() {
     {
       history: "push",
       shallow: false,
-    }
+    },
   );
 
   // local typing state
@@ -93,7 +92,6 @@ export default function PartiesToolbar() {
           <SelectContent>
             <SelectItem value="ALL">All</SelectItem>
             <SelectItem value="CUSTOMER">Customer</SelectItem>
-            <SelectItem value="SUPPLIER">Supplier</SelectItem>
             <SelectItem value="JOBWORKER">Jobworker</SelectItem>
             <SelectItem value="OTHER">Other</SelectItem>
           </SelectContent>

@@ -62,6 +62,8 @@ export default function PartyDialog({ trigger, initial }: Props) {
   const [isPending, setPending] = React.useState(false);
   const [formError, setFormError] = React.useState<string | null>(null);
 
+  console.log(initial);
+
   const form = useForm({
     resolver: zodResolver(partyCreateSchema),
     defaultValues: {
@@ -151,9 +153,7 @@ export default function PartyDialog({ trigger, initial }: Props) {
                       <SelectItem value={PartyKind.CUSTOMER}>
                         Customer
                       </SelectItem>
-                      <SelectItem value={PartyKind.SUPPLIER}>
-                        Supplier
-                      </SelectItem>
+
                       <SelectItem value={PartyKind.JOBWORKER}>
                         Job-worker
                       </SelectItem>

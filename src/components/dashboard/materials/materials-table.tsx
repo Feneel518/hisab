@@ -49,7 +49,7 @@ const MaterialTable: FC<MaterialTableProps> = ({
   const [pendingId, setPendingId] = React.useState<string | null>(null);
   const [pageQ, setPageQ] = useQueryState(
     "page",
-    parseAsInteger.withDefault(1)
+    parseAsInteger.withDefault(1),
   );
 
   async function onToggle(id: string) {
@@ -118,12 +118,12 @@ const MaterialTable: FC<MaterialTableProps> = ({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem
+                    {/* <DropdownMenuItem
                       onClick={() =>
                         router.push(`/dashboard/materials/${p.id}`)
                       }>
                       View
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> */}
                     <MaterialsDialog
                       trigger={
                         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
