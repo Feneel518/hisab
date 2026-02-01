@@ -81,9 +81,7 @@ const page: FC<pageProps> = async ({ searchParams }) => {
           </p>
         </div>
 
-        {/* Toolbar will use nuqs hooks */}
         <ChallanToolbar></ChallanToolbar>
-        {/* <MaterialsToolbar></MaterialsToolbar> */}
       </div>
 
       <div className="mt-4">
@@ -93,17 +91,6 @@ const page: FC<pageProps> = async ({ searchParams }) => {
             page={page}
             total={total}
             totalPages={totalPages}></ChallanTable>
-          {/* <PartiesTable
-             items={items}
-             total={total}
-             page={page} items={} page={} total={} totalPages={}
-             totalPages={totalPages}
-           /> */}
-          {/* <MaterialTable
-            items={items}
-            page={page}
-            total={total}
-            totalPages={totalPages}></MaterialTable> */}
         </div>
 
         <div className="md:hidden">

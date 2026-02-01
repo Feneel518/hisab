@@ -46,7 +46,7 @@ export default async function Page() {
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-1/2 top-[-200px] h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
           <div className="absolute right-[-120px] top-[120px] h-[420px] w-[420px] rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="absolute left-[-120px] top-[240px] h-[420px] w-[420px] rounded-full bg-purple-500/10 blur-3xl" />
+          <div className="absolute left-[-120px] top-60 h-[420px] w-[420px] rounded-full bg-purple-500/10 blur-3xl" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.12),transparent_35%),radial-gradient(circle_at_80%_40%,rgba(255,255,255,0.08),transparent_35%)]" />
         </div>
 
@@ -75,7 +75,7 @@ export default async function Page() {
             <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
               Hisab is a modern challan register for traders & manufacturers.
               Share challans on WhatsApp/Email, keep everything searchable, and
-              generate GST-ready bills when you’re ready.
+              generate GST-ready bills when you&apos;re ready.
             </p>
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -116,7 +116,7 @@ export default async function Page() {
 
           {/* Trust strip */}
           <div className="mx-auto mt-12 max-w-5xl">
-            <Card className="border-muted/60 bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/40">
+            <Card className="border-muted/60 bg-card/60 backdrop-blur supports-backdrop-filter:bg-card/40">
               <CardContent className="p-5 sm:p-6">
                 <div className="grid gap-4 sm:grid-cols-3 sm:gap-6">
                   <TrustItem
@@ -197,7 +197,7 @@ export default async function Page() {
 
           {/* Mock “App Screenshot” */}
           <div className="relative">
-            <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-primary/25 via-transparent to-emerald-500/15 blur-xl" />
+            <div className="absolute -inset-2 rounded-3xl bg-linear-to-br from-primary/25 via-transparent to-emerald-500/15 blur-xl" />
             <Card className="relative overflow-hidden rounded-3xl border-muted/60">
               <CardHeader className="border-b bg-muted/20">
                 <div className="flex items-center justify-between">
@@ -523,7 +523,7 @@ export default async function Page() {
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-4 pb-16 sm:pb-24">
         <Card className="relative overflow-hidden rounded-3xl border-muted/60">
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-emerald-500/10" />
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-primary/20 via-transparent to-emerald-500/10" />
           <CardContent className="relative p-8 sm:p-10">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div>
@@ -575,7 +575,7 @@ async function SiteHeader() {
   });
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/75 backdrop-blur supports-[backdrop-filter]:bg-background/55">
+    <header className="sticky top-0 z-40 border-b bg-background/75 backdrop-blur supports-backdrop-filter:bg-background/55">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
           <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
@@ -744,7 +744,7 @@ function FeatureCard({
   desc: string;
 }) {
   return (
-    <Card className="rounded-2xl border-muted/60 bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/40">
+    <Card className="rounded-2xl border-muted/60 bg-card/60 backdrop-blur supports-backdrop-filter:bg-card/40">
       <CardHeader className="pb-2">
         <div className="flex items-center gap-3">
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -835,10 +835,10 @@ function PricingCard({
         "rounded-3xl border-muted/60",
         highlighted
           ? "relative overflow-hidden border-primary/40 bg-card"
-          : "bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/40",
+          : "bg-card/60 backdrop-blur supports-backdrop-filter:bg-card/40",
       ].join(" ")}>
       {highlighted ? (
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-emerald-500/10" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-primary/20 via-transparent to-emerald-500/10" />
       ) : null}
 
       <CardHeader className="relative">
@@ -890,7 +890,7 @@ function PricingCard({
 
 function Faq({ q, a }: { q: string; a: string }) {
   return (
-    <Card className="rounded-2xl border-muted/60 bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/40">
+    <Card className="rounded-2xl border-muted/60 bg-card/60 backdrop-blur supports-backdrop-filter:bg-card/40">
       <CardHeader className="pb-2">
         <CardTitle className="text-base">{q}</CardTitle>
       </CardHeader>
