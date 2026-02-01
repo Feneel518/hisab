@@ -620,7 +620,7 @@ async function SiteHeader() {
                 <Link href="/auth/login">Sign in</Link>
               </Button>
               <Button asChild>
-                <Link href="/auth/sign-up">
+                <Link href="/auth/login">
                   Get started <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
